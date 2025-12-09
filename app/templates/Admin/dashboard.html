@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<div class="admin-tiles">
+
+    <a class="admin-tile" href="{{ url_for('admin.manage_cars') }}">
+        <h3>Manage Vehicles</h3>
+        <p>Add, edit, delete vehicles</p>
+    </a>
+
+    <a class="admin-tile" href="{{ url_for('admin.manage_drivers') }}">
+        <h3>Manage Drivers</h3>
+        <p>Driver profiles & assignments</p>
+    </a>
+
+    <a class="admin-tile" href="{{ url_for('admin.manage_trips') }}">
+        <h3>Manage Trips</h3>
+        <p>Trip history, routes, statuses</p>
+    </a>
+
+    <a class="admin-tile" href="{{ url_for('admin.manage_expenses') }}">
+        <h3>Manage Expenses</h3>
+        <p>Fuel, repairs, operational costs</p>
+    </a>
+
+    <a class="admin-tile" href="{{ url_for('admin.manage_maintenances') }}">
+        <h3>Manage Maintenance</h3>
+        <p>Technical service & schedules</p>
+    </a>
+
+</div>
+
+{% endblock %}

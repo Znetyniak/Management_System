@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Fleet Management{% endblock %}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  <!-- JS -->
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  {% include 'includes/_navbar.html' %}
+
+  <!-- PAGE CONTENT -->
+  <main class="container">
+      {% include 'includes/_flash.html' %}
+      {% block content %}{% endblock %}
+  </main>
+
+  <!-- CONFIRM MODAL -->
+  {% include 'includes/_confirm_modal.html' %}
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+      <div class="container">
+          <small>© Fleet Management System</small>
+      </div>
+  </footer>
+
+</body>
+</html>

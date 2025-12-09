@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Trip {{ trip.id }}{% endblock %}
+{% block content %}
+<h1>Trip — {{ trip.route }}</h1>
+<div class="card">
+  <p><strong>Date:</strong> {{ trip.date }}</p>
+  <p><strong>Vehicle:</strong> {{ trip.vehicle.brand }} {{ trip.vehicle.model }}</p>
+  <p><strong>Driver:</strong> {{ trip.driver.full_name }}</p>
+  <p><strong>Distance:</strong> {{ trip.distance_km }} km</p>
+</div>
+{% endblock %}

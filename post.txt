@@ -1,0 +1,52 @@
+BASE URL:
+http://127.0.0.1:5000
+
+
+========================
+VEHICLES
+========================
+GET     http://127.0.0.1:5000/api/vehicles
+GET     http://127.0.0.1:5000/api/vehicles/1
+POST    http://127.0.0.1:5000/api/vehicles
+PUT     http://127.0.0.1:5000/api/vehicles/1
+DELETE  http://127.0.0.1:5000/api/vehicles/1
+
+
+========================
+DRIVERS
+========================
+GET     http://127.0.0.1:5000/api/drivers
+GET     http://127.0.0.1:5000/api/drivers/1
+POST    http://127.0.0.1:5000/api/drivers
+PUT     http://127.0.0.1:5000/api/drivers/1
+DELETE  http://127.0.0.1:5000/api/drivers/1
+
+
+========================
+TRIPS
+========================
+GET     http://127.0.0.1:5000/api/trips
+GET     http://127.0.0.1:5000/api/trips/1
+POST    http://127.0.0.1:5000/api/trips
+PUT     http://127.0.0.1:5000/api/trips/1
+DELETE  http://127.0.0.1:5000/api/trips/1
+
+
+========================
+EXPENSES
+========================
+GET     http://127.0.0.1:5000/api/expenses
+GET     http://127.0.0.1:5000/api/expenses/1
+POST    http://127.0.0.1:5000/api/expenses
+PUT     http://127.0.0.1:5000/api/expenses/1
+DELETE  http://127.0.0.1:5000/api/expenses/1
+
+
+========================
+MAINTENANCE
+========================
+GET     http://127.0.0.1:5000/api/maintenance
+GET     http://127.0.0.1:5000/api/maintenance/1
+POST    http://127.0.0.1:5000/api/maintenance
+PUT     http://127.0.0.1:5000/api/maintenance/1
+DELETE  http://127.0.0.1:5000/api/maintenance/1

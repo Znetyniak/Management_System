@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Manage maintenance{% endblock %}
+{% block content %}
+<h1>Maintenance</h1>
+<a class="button" href="{{ url_for('admin.add_maintenance') }}">Add maintenance</a>
+
+<table class="table">
+  <thead><tr><th>ID</th><th>Date</th><th>Type</th><th>Vehicle</th><th>Next date</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for m in maintenances %}
+    <tr>
+    <td>{{ m.id }}</td>
+    <td>{{ m.date }}</td>
+    <td>{{ m.maintenance_type }}</td>
+    <td>{{ m.vehicle.brand }} {{ m.vehicle.model }}</td>
+    <td>{{ m.next_date }}</td>
+    <td><a href="{{ url_for('admin.edit_maintenance', mid=m.id) }}">Edit</a></td>
+</tr>
+    {% else %}
+    <tr><td colspan="6">No maintenances</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

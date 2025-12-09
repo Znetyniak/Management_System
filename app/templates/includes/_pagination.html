@@ -1,0 +1,36 @@
+<div class="pagination">
+
+    {# ----------------------
+       Збираємо query-string
+       ---------------------- #}
+
+    {% set qs = "" %}
+    {% for key, value in request.args.items() %}
+        {% if key != "page" %}
+            {% set qs = qs + "&" + key + "=" + value %}
+        {% endif %}
+    {% endfor %}
+
+    {# ----------------------
+       PREV
+       ---------------------- #}
+    {% if page > 1 %}
+        <a class="button"
+           href="{{ url_for(request.endpoint) }}?page={{ page - 1 }}{{ qs }}">
+            Prev
+        </a>
+    {% endif %}
+
+    <span>Page {{ page }} of {{ pages }}</span>
+
+    {# ----------------------
+       NEXT
+       ---------------------- #}
+    {% if page < pages %}
+        <a class="button"
+           href="{{ url_for(request.endpoint) }}?page={{ page + 1 }}{{ qs }}">
+            Next
+        </a>
+    {% endif %}
+
+</div>

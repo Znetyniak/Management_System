@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Add vehicle{% endblock %}
+{% block content %}
+<h1>Add vehicle</h1>
+
+<form method="post" class="form-card">
+  <label>Brand</label><input name="brand" required value="{{ form.brand or '' }}">
+  <label>Model</label><input name="model" required value="{{ form.model or '' }}">
+  <label>Year</label><input name="year" type="number" min="1900" max="2100" required value="{{ form.year or '' }}">
+  <label>VIN</label><input name="vin" required value="{{ form.vin or '' }}">
+  <label>Technical state</label>
+  <select name="technical_state">
+    <option value="Excellent">Excellent</option>
+    <option value="Good">Good</option>
+    <option value="Normal">Normal</option>
+    <option value="Needs service">Needs service</option>
+  </select>
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_cars') }}" style="background:#6b7280">Cancel</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Manage trips{% endblock %}
+{% block content %}
+<h1>Trips</h1>
+<a class="button" href="{{ url_for('admin.add_trip') }}">Add trip</a>
+
+<table class="table">
+  <thead><tr><th>ID</th><th>Date</th><th>Route</th><th>Vehicle</th><th>Driver</th><th>Distance</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for t in trips %}
+    <tr>
+      <td>{{ t.id }}</td>
+      <td>{{ t.date }}</td>
+      <td>{{ t.route }}</td>
+      <td>{{ t.vehicle.brand }} {{ t.vehicle.model }}</td>
+      <td>{{ t.driver.full_name }}</td>
+      <td>{{ t.distance_km }}</td>
+      <td><a href="{{ url_for('admin.edit_trip', tid=t.id) }}">Edit</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7">No trips</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Manage drivers{% endblock %}
+{% block content %}
+<h1>Drivers</h1>
+<a class="button" href="{{ url_for('admin.add_driver') }}">Add driver</a>
+
+<table class="table">
+  <thead><tr><th>ID</th><th>Name</th><th>License</th><th>Experience</th><th>Medical</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for d in drivers %}
+    <tr>
+      <td>{{ d.id }}</td>
+      <td>{{ d.full_name }}</td>
+      <td>{{ d.license_number }}</td>
+      <td>{{ d.experience_years }}</td>
+      <td>{{ d.medical_check }}</td>
+      <td><a href="{{ url_for('admin.edit_driver', did=d.id) }}">Edit</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No drivers</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

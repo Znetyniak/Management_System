@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Maintenance Report{% endblock %}
+
+{% block content %}
+<h1>Maintenance Report</h1>
+
+<!-- Filters -->
+<form method="get" class="form-card" style="margin-bottom: 20px; max-width: 600px;">
+
+  <label>Start date</label>
+  <input type="date" name="from" value="{{ request.args.get('from','') }}">
+
+  <label>End date</label>
+  <input type="date" name="to" value="{{ request.args.get('to','') }}">
+
+  <label>Vehicle</label>
+  <select name="vehicle_id">
+    <option value="">All vehicles</option>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}"
+        {% if request.args.get('vehicle_id') == v.id|string %}selected{% endif %}>
+        {{ v.brand }} {{ v.model }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Maintenance type</label>
+  <select name="type">
+    <option value="">All types</option>
+    <option value="engine" {% if request.args.get('type')=='engine' %}selected{% endif %}>Engine</option>
+    <option value="tires" {% if request.args.get('type')=='tires' %}selected{% endif %}>Tires</option>
+    <option value="brakes" {% if request.args.get('type')=='brakes' %}selected{% endif %}>Brakes</option>
+    <option value="inspection" {% if request.args.get('type')=='inspection' %}selected{% endif %}>Inspection</option>
+    <option value="other" {% if request.args.get('type')=='other' %}selected{% endif %}>Other</option>
+  </select>
+
+  <div class="form-row" style="margin-top: 10px;">
+    <button class="button" type="submit">Generate</button>
+
+    <a class="button" 
+       style="background:#16a34a;" 
+       href="{{ url_for('store.report_maintenance_export',
+                        from=request.args.get('from',''),
+                        to=request.args.get('to',''),
+                        vehicle_id=request.args.get('vehicle_id',''),
+                        type=request.args.get('type','')) }}">
+      Download Excel
+    </a>
+  </div>
+
+</form>
+
+
+<!-- Table -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Vehicle</th>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Next Maintenance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for m in report.records %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.vehicle_id }}</td>
+        <td>{{ m.type }}</td>
+        <td>{{ m.date }}</td>
+        <td>{{ m.next_date }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No data</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<!-- Summary -->
+<h3 style="margin-top: 25px;">Summary</h3>
+
+<div class="cards">
+
+  <div class="card">
+    <h3>Total maintenance operations</h3>
+    <div class="card-value">{{ report.count }}</div>
+  </div>
+
+  <div class="card">
+    <h3>Maintenance per vehicle</h3>
+    <ul>
+      {% for vid, cnt in report.per_vehicle.items() %}
+        <li>Vehicle {{ vid }} — {{ cnt }} operations</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Maintenance per type</h3>
+    <ul>
+      {% for t, cnt in report.per_type.items() %}
+        <li>{{ t|capitalize }} — {{ cnt }} times</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}

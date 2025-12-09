@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Usage report{% endblock %}
+
+{% block content %}
+<h1>Usage Report</h1>
+
+<form method="get" class="form-card" style="margin-bottom: 20px; max-width: 600px;">
+
+  <label>Start date</label>
+  <input type="date" name="start"
+         value="{{ start_date if start_date else '' }}">
+
+  <label>End date</label>
+  <input type="date" name="end"
+         value="{{ end_date if end_date else '' }}">
+
+  <label>Vehicle</label>
+  <select name="vehicle_id">
+    <option value="">All vehicles</option>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}"
+        {% if vehicle_id and vehicle_id == v.id %}selected{% endif %}>
+        {{ v.brand }} {{ v.model }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <div class="form-row" style="margin-top: 10px;">
+    <button class="button" type="submit">Generate</button>
+
+    <!-- Excel Export -->
+    <a class="button" style="background: green;"
+       href="{{ url_for('store.report_usage_export',
+                        start=request.args.get('start'),
+                        end=request.args.get('end'),
+                        vehicle_id=request.args.get('vehicle_id')) }}">
+      Download Excel
+    </a>
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Vehicle</th>
+      <th>VIN</th>
+      <th>Trips</th>
+      <th>Total Distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in report %}
+      <tr>
+        <td>{{ r.brand }} {{ r.model }}</td>
+        <td>{{ r.vin }}</td>
+        <td>{{ r.trip_count }}</td>
+        <td>{{ r.total_distance or 0 }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">No data</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

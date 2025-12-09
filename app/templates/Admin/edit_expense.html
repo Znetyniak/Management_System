@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Edit expense{% endblock %}
+{% block content %}
+<h1>Edit expense</h1>
+
+<form method="post" class="form-card">
+
+  <label>Date</label>
+  <input name="date" type="date" value="{{ expense.date.strftime('%Y-%m-%d') }}" required>
+
+  <label>Vehicle</label>
+  <select name="vehicle_id" required>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}" {% if v.id == expense.vehicle_id %}selected{% endif %}>
+        {{ v.brand }} {{ v.model }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Type</label>
+  <select name="expense_type" required>
+    <option value="">-- Select expense type --</option>
+    {% set types = ["fuel", "repair", "parts", "insurance", "toll", "parking", "service", "misc"] %}
+    {% for t in types %}
+      <option value="{{ t }}" {% if expense.expense_type == t %}selected{% endif %}>
+        {{ t | capitalize }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Amount</label>
+  <input name="amount" type="number" step="0.01" value="{{ expense.amount }}" required>
+
+  <label>Description</label>
+  <input name="description" value="{{ expense.description }}">
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Update</button>
+    <a class="button" href="{{ url_for('admin.manage_expenses') }}" style="background:#6b7280">Cancel</a>
+  </div>
+
+</form>
+{% endblock %}

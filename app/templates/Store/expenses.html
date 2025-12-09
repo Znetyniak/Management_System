@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Expenses{% endblock %}
+{% block content %}
+<h1>Expenses</h1>
+<a class="button" href="{{ url_for('admin.add_expense') }}">Add expense (Admin)</a>
+
+<table class="table">
+  <thead><tr><th>ID</th><th>Date</th><th>Vehicle</th><th>Type</th><th>Amount</th><th>Description</th></tr></thead>
+  <tbody>
+    {% for e in expenses %}
+    <tr>
+      <td>{{ e.id }}</td>
+      <td>{{ e.date }}</td>
+      <td>{{ e.vehicle.brand }} {{ e.vehicle.model }}</td>
+      <td>{{ e.type }}</td>
+      <td>{{ e.amount }}</td>
+      <td>{{ e.description }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No expenses</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

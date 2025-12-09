@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Add maintenance{% endblock %}
+{% block content %}
+<h1>Add maintenance</h1>
+
+<form method="post" class="form-card">
+
+  <label>Date</label>
+  <input name="date" type="date" required>
+
+  <label>Maintenance type</label>
+  <select name="maintenance_type" required>
+    <option value="">-- Select type --</option>
+    <option value="oil_change">Oil change</option>
+    <option value="tire_change">Tire change</option>
+    <option value="brake_service">Brake service</option>
+    <option value="inspection">Inspection</option>
+    <option value="engine_service">Engine service</option>
+    <option value="filter_replacement">Filter replacement</option>
+    <option value="general_service">General service</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label>Vehicle</label>
+  <select name="vehicle_id" required>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}">{{ v.brand }} {{ v.model }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Next date</label>
+  <input name="next_date" type="date">
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_maintenances') }}" style="background:#6b7280">Cancel</a>
+  </div>
+
+</form>
+{% endblock %}

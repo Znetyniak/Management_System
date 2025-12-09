@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Add driver{% endblock %}
+{% block content %}
+<h1>Add driver</h1>
+
+<form method="post" class="form-card">
+  <label>Full name</label><input name="full_name" required>
+  <label>License number</label><input name="license_number" required>
+  <label>Experience (years)</label><input name="experience_years" type="number" required>
+  <label>Medical check</label><input name="medical_check" type="date" required>
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_drivers') }}" style="background:#6b7280">Cancel</a>
+  </div>
+</form>
+{% endblock %}

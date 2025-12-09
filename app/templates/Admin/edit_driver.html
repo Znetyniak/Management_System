@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Edit driver{% endblock %}
+{% block content %}
+<h1>Edit driver</h1>
+
+<form method="post" class="form-card">
+  <label>Full name</label><input name="full_name" required value="{{ form.full_name or '' }}">
+  <label>License number</label><input name="license_number" required value="{{ form.license_number or '' }}">
+  <label>Experience (years)</label><input name="experience_years" type="number" required value="{{ form.experience_years or '' }}">
+  <label>Medical check</label><input name="medical_check" type="date" required value="{{ form.medical_check or '' }}">
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_drivers') }}" style="background:#6b7280">Cancel</a>
+  </div>
+</form>
+{% endblock %}

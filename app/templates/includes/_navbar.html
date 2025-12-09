@@ -1,0 +1,35 @@
+<header class="site-header">
+  <div class="container nav-row">
+
+    <!-- LEFT NAV -->
+    <div class="nav-left">
+      <a class="brand" href="{{ url_for('store.dashboard') }}">Fleet</a>
+
+      {% if session.get('user_id') %}
+        <a href="{{ url_for('store.dashboard') }}">Store</a>
+
+        {% if session.get('role') == 'admin' %}
+          <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- RIGHT NAV -->
+    <div class="nav-right">
+      {% if session.get('user_id') %}
+        <span class="user-label">
+          {{ session.get('user_name') }}
+        </span>
+
+        <a class="button" href="{{ url_for('auth.logout') }}">
+          Logout
+        </a>
+      {% else %}
+        <a class="button" href="{{ url_for('auth.login') }}">
+          Login
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</header>

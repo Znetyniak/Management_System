@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Manage expenses{% endblock %}
+{% block content %}
+<h1>Expenses</h1>
+
+<a class="button" href="{{ url_for('admin.add_expense') }}">Add expense</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Vehicle</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for e in expenses %}
+    <tr>
+      <td>{{ e.id }}</td>
+
+      <td>
+        {{ e.date.strftime('%Y-%m-%d') if e.date else '' }}
+      </td>
+
+      <td>
+        {{ e.vehicle.brand }} {{ e.vehicle.model }}
+      </td>
+
+      <td>
+        {{ e.expense_type }}
+      </td>
+
+      <td>
+        {{ e.amount }}
+      </td>
+
+      <td>
+        <a href="{{ url_for('admin.edit_expense', eid=e.id) }}">Edit</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="6">No expenses</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

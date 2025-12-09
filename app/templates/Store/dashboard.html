@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Store Dashboard</h2>
+
+<!-- REPORTS -->
+<div class="reports-links">
+    <strong>Reports</strong><br>
+    <a href="{{ url_for('store.report_usage') }}">Usage report</a>
+    <a href="{{ url_for('store.report_expenses') }}">Expenses report</a>
+    <a href="{{ url_for('store.report_maintenance') }}">Maintenance report</a>
+</div>
+
+<!-- STORE TILES -->
+<div class="store-tiles">
+
+    <div class="store-tile">
+        <h3>Vehicles</h3>
+        <p>Total vehicles in fleet</p>
+        <div class="card-value">{{ total_vehicles }}</div>
+    </div>
+
+    <div class="store-tile">
+        <h3>Active trips</h3>
+        <p>Currently ongoing trips</p>
+        <div class="card-value">{{ active_trips }}</div>
+    </div>
+
+    <div class="store-tile">
+        <h3>Upcoming maintenance</h3>
+        <p>Scheduled service soon</p>
+        <div class="card-value">{{ upcoming_maint }}</div>
+    </div>
+
+    <div class="store-tile">
+        <h3>Month expenses</h3>
+        <p>Total cost for this month</p>
+        <div class="card-value">{{ month_expenses }}</div>
+    </div>
+
+</div>
+
+<br>
+
+<!-- SHORTCUT BUTTONS -->
+<a href="{{ url_for('store.vehicles') }}" class="button">Vehicles</a>
+<a href="{{ url_for('store.trips') }}" class="button">Trips</a>
+
+{% endblock %}

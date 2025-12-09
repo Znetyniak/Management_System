@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Expenses Report{% endblock %}
+
+{% block content %}
+<h1>Expenses Report</h1>
+
+<form method="get" class="form-card" style="margin-bottom: 20px; max-width:700px;">
+
+  <label>Start date</label>
+  <input type="date" name="from" value="{{ start_date or '' }}">
+
+  <label>End date</label>
+  <input type="date" name="to" value="{{ end_date or '' }}">
+
+  <label>Vehicle</label>
+  <select name="vehicle_id">
+    <option value="">All vehicles</option>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}" {% if selected_vehicle == v.id|string %}selected{% endif %}>
+        {{ v.brand }} {{ v.model }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Expense type</label>
+  <select name="type">
+    <option value="">All types</option>
+    {% for t,v in per_type.items() %}
+      <option value="{{ t }}" {% if selected_type == t %}selected{% endif %}>{{ t }}</option>
+    {% endfor %}
+  </select>
+
+  <div style="margin-top:14px;">
+    <button class="button" type="submit">Generate</button>
+
+    <!-- Download Excel -->
+    <a class="button" style="background: green;"
+       href="{{ url_for('store.report_expenses_export',
+                        from=start_date,
+                        to=end_date,
+                        vehicle_id=selected_vehicle,
+                        type=selected_type) }}">
+      Download Excel
+    </a>
+  </div>
+</form>
+
+
+<!-- ============================ -->
+<!-- SUMMARY -->
+<!-- ============================ -->
+<div class="card" style="margin-bottom: 20px;">
+  <h3>Total expenses: {{ total_amount }} €</h3>
+  <p>Records: {{ expenses|length }}</p>
+</div>
+
+
+<!-- ============================ -->
+<!-- TABLE OF EXPENSES -->
+<!-- ============================ -->
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Vehicle</th>
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Date</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for e in expenses %}
+    <tr>
+      <td>{{ e.id }}</td>
+      <td>{{ e.vehicle_id }}</td>
+      <td>{{ e.expense_type }}</td>
+      <td>{{ e.amount }}</td>
+      <td>{{ e.date }}</td>
+      <td>{{ e.description or '' }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6" style="text-align:center;">No expenses found</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+<!-- ============================ -->
+<!-- EXPENSES PER VEHICLE -->
+<!-- ============================ -->
+<h2 style="margin-top:30px;">Expenses per vehicle</h2>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Vehicle ID</th>
+    <th>Total amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for vid, amount in per_vehicle.items() %}
+  <tr>
+    <td>{{ vid }}</td>
+    <td>{{ amount }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="2">No data</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+<!-- ============================ -->
+<!-- EXPENSES PER TYPE -->
+<!-- ============================ -->
+<h2 style="margin-top:30px;">Expenses per category</h2>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th>Total amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for t, amount in per_type.items() %}
+  <tr>
+    <td>{{ t }}</td>
+    <td>{{ amount }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="2">No data</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

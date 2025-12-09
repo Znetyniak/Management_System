@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Edit Maintenance{% endblock %}
+
+{% block content %}
+
+<h1>Edit Maintenance #{{ maintenance.id }}</h1>
+
+<form method="post" class="form">
+
+    <label>Maintenance Type</label>
+    <input type="text" name="maintenance_type" value="{{ form.maintenance_type }}" required>
+
+    <label>Date</label>
+    <input type="date" name="date" value="{{ form.date }}">
+
+    <label>Next Date</label>
+    <input type="date" name="next_date" value="{{ form.next_date }}">
+
+    <label>Vehicle</label>
+    <select name="vehicle_id">
+        {% for v in vehicles %}
+            <option value="{{ v.id }}"
+                    {% if v.id == maintenance.vehicle_id %}selected{% endif %}>
+                {{ v.brand }} {{ v.model }} ({{ v.vin }})
+            </option>
+        {% endfor %}
+    </select>
+
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_maintenances') }}">Back</a>
+</form>
+
+{% endblock %}

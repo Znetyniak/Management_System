@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Add expense{% endblock %}
+{% block content %}
+<h1>Add expense</h1>
+
+<form method="post" class="form-card">
+
+  <label>Date</label>
+  <input name="date" type="date" required>
+
+  <label>Vehicle</label>
+  <select name="vehicle_id" required>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}">{{ v.brand }} {{ v.model }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Type</label>
+  <select name="expense_type" required>
+    <option value="">-- Select expense type --</option>
+    <option value="fuel">Fuel</option>
+    <option value="repair">Repair</option>
+    <option value="parts">Parts</option>
+    <option value="insurance">Insurance</option>
+    <option value="toll">Toll / Road fees</option>
+    <option value="parking">Parking</option>
+    <option value="service">Service / Maintenance</option>
+    <option value="misc">Misc</option>
+  </select>
+
+  <label>Amount</label>
+  <input name="amount" type="number" step="0.01" required>
+
+  <label>Description</label>
+  <input name="description">
+
+  <div class="form-row" style="margin-top:12px">
+    <button class="button" type="submit">Save</button>
+    <a class="button" href="{{ url_for('admin.manage_expenses') }}" style="background:#6b7280">Cancel</a>
+  </div>
+
+</form>
+{% endblock %}

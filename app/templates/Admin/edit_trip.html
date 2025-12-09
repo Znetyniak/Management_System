@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Edit Trip{% endblock %}
+
+{% block content %}
+
+<h1>Edit Trip #{{ trip.id }}</h1>
+
+<form method="post" class="form-card">
+
+  <label>Date</label>
+  <input name="date" type="datetime-local" required 
+         value="{{ trip.date.strftime('%Y-%m-%dT%H:%M') if trip.date else '' }}">
+
+  <label>Route</label>
+  <input name="route" required value="{{ form.route or trip.route }}">
+
+  <label>Distance (km)</label>
+  <input name="distance_km" type="number" min="0" step="0.1" required 
+         value="{{ form.distance_km or trip.distance_km }}">
+
+  <label>Vehicle</label>
+  <select name="vehicle_id" required>
+    {% for v in vehicles %}
+      <option value="{{ v.id }}"
+        {% if v.id == trip.vehicle_id %}selected{% endif %}>
+        {{ v.brand }} {{ v.model }} (ID {{ v.id }})
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Driver</label>
+  <select name="driver_id" required>
+    {% for d in drivers %}
+      <option value="{{ d.id }}"
+        {% if d.id == trip.driver_id %}selected{% endif %}>
+        {{ d.full_name }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Notes</label>
+  <textarea name="notes" rows="3">{{ form.notes or trip.notes }}</textarea>
+
+  <div class="form-row" style="margin-top:12px;">
+    <button class="button" type="submit">Save</button>
+    <a class="button" style="background:#6b7280;" href="{{ url_for('admin.manage_trips') }}">
+      Cancel
+    </a>
+  </div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Vehicle {{ vehicle.id }}{% endblock %}
+{% block content %}
+<h1>{{ vehicle.brand }} {{ vehicle.model }} — #{{ vehicle.id }}</h1>
+
+<div class="grid-2" style="gap:12px">
+  <div class="card">
+    <p><strong>VIN:</strong> {{ vehicle.vin }}</p>
+    <p><strong>Year:</strong> {{ vehicle.year }}</p>
+    <p><strong>State:</strong> {{ vehicle.technical_state }}</p>
+    <p><strong>Trips:</strong> {{ vehicle.trips|length }}</p>
+  </div>
+
+  <div class="card">
+    <h4>Quick actions</h4>
+
+    {% if session.get('role') == 'admin' %}
+      <a class="button" href="{{ url_for('admin.edit_car', vid=vehicle.id) }}">Edit (Admin)</a>
+    {% endif %}
+
+    <a class="button" href="{{ url_for('store.trips') }}">View trips</a>
+  </div>
+</div>
+
+<h3 style="margin-top:16px">Trips</h3>
+
+<table class="table">
+  <thead>
+    <tr><th>ID</th><th>Date</th><th>Route</th><th>Distance</th></tr>
+  </thead>
+  <tbody>
+    {% for t in vehicle.trips %}
+    <tr>
+      <td>{{ t.id }}</td>
+      <td>{{ t.date }}</td>
+      <td>{{ t.route }}</td>
+      <td>{{ t.distance_km }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">No trips</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
